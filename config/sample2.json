@@ -1,0 +1,15 @@
+{
+    "settings": {
+        "Tools": {
+            "wb_tool": {
+                "app_id" : "wildfloc",
+                "website_url": "wildfloc.com",
+                "prompt_id": "alq-ai-team/wildfloc-chain",
+                "description": "This is a websearch tool it can be used to answer question whach are about wildfloc"
+            }
+        },
+        "parent_settings": {
+            "agent_id": "alq-ai-team/wildfloc"
+        }
+    }
+}
