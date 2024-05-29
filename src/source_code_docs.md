@@ -52,7 +52,4 @@ The source code files in the "srs" directory work together to manage and execute
 - **web_search_tool.py** performs web searches using the configured search API and provides methods for search execution, URL extraction, and text cleaning.
 
 Together, these files enable the chatbot service to effectively manage and execute agents and custom chains, providing users with accurate and relevant responses to their queries.
-
-<img src="src/Document systems.png"
-     alt="Markdown Monster icon"
-     style="float: left; margin-right: 10px;" />
+## Source Code Flow Diagram:
