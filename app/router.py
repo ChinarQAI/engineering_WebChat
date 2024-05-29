@@ -20,6 +20,17 @@ from ast_main import execute_agent
 # Creating a FastAPI instance
 app = FastAPI()
 
+# Root route
+@app.get("/")
+async def root():
+    """
+    Root endpoint of the FastAPI application.
+    
+    Returns:
+        dict: A dictionary containing a message indicating that the service is healthy and running.
+    """
+    return {"message": "Service is healthy and running."}
+
 @app.post("/invoke/{app_id}")
 async def invoke_agent(app_id: str, query_input:QueryInput) -> dict:
     """

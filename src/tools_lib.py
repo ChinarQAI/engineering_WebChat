@@ -21,11 +21,3 @@ def search_tool_wildfloc(question: str):
 
 # Putting all tools together
 tools_list_wildfloc = [search_tool_wildfloc]
-@tool
-def search_tool_cqai(question: str):
-    """This is a websearch tool that you can use for question about any website url"""
-    settings = fetch_settings("cqai")
-    web_search = WebSearchTool(settings)
-    response = web_search.ws_tool(question)
-    return response
-tools_list_cqai = [search_tool_wildfloc]
