@@ -53,3 +53,4 @@ The source code files in the "srs" directory work together to manage and execute
 
 Together, these files enable the chatbot service to effectively manage and execute agents and custom chains, providing users with accurate and relevant responses to their queries.
 ## Source Code Flow Diagram:
+![Document systems](https://github.com/ChinarQAI/engineering_WebChat/assets/55634495/f1f90fd8-6aa0-4175-9b16-71b3455382c8)
