@@ -2,7 +2,7 @@
 
 ## Description
 
-**Project Title: WebChat AI**
+**Title: WebChat AI**
 
 **Description:**
 
