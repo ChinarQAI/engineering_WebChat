@@ -2,7 +2,7 @@
     "settings": {
         "Tools": {
             "wb_tool": {
-                "app_id" : "wildfloc",
+                "app_id" : "<unique name of the app building service for>",
                 "website_url": "wildfloc.com",
                 "prompt_id": "alq-ai-team/wildfloc-chain",
                 "description": "This is a websearch tool it can be used to answer question whach are about wildfloc"
@@ -13,5 +13,12 @@
             "tool_id": "wildfloc"
         }
     }
-}
-
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

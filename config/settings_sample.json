@@ -1,0 +1,16 @@
+{
+    "settings": {
+        "Tools": {
+            "wb_tool": {
+                "app_id" : "<unique name of the app building service for>",
+                "website_url": "<URL of the website>",
+                "prompt_id": "<ID of the prompt used for the custom chain (in langsmith Hub)>",
+                "description": "<Description of the web search tool>"
+            }
+        },
+        "parent_settings": {
+            "agent_id": "<ID of the agent (from langsmith Hub>",
+            "tool_id": "<ID of the tool (usually same as app_id, used in tools_list_{tool_id}>"
+        }
+    }
+}
