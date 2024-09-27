@@ -9,7 +9,7 @@ from utils import llm, get_memory, get_prompt
 
 from dotenv import load_dotenv
 
-load_dotenv("/home/bhat/ALQ/ALQ-Projects/mowasalat_bot/.env")
+load_dotenv()
 
 class AgentManager:
     def __init__(self, settings: dict):
