@@ -12,7 +12,7 @@ from langchain_openai import ChatOpenAI
 
 # Load environment variables from the .env file
 # dotenv_path = os.path.join(os.path.dirname(__file__), "../.env")
-load_dotenv("/home/bhat/ALQ/ALQ-Projects/mowasalat_bot/.env")
+load_dotenv()
 
 
 def setup_llm() -> object:
