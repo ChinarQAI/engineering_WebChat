@@ -30,4 +30,6 @@ def search_tool_cqai(question: str):
     response = web_search.ws_tool(question)
     return response
 
+
+
 tools_list_cqai_chat = [search_tool_cqai]
