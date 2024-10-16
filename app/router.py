@@ -17,7 +17,7 @@ from schemas import QueryInput, SettingsInput
 from settings_manager import fetch_settings, insert_settings
 
 # Importing the main function to execute the agent
-from ast_main import execute_agent
+from src.ast_main import execute_agent
 
 # Creating a FastAPI instance
 app = FastAPI()
