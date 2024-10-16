@@ -3,6 +3,7 @@ import sys
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi.responses import StreamingResponse
 
 # Adding paths to import custom modules
 sys.path.insert(1, "src")
@@ -45,15 +46,15 @@ async def invoke_agent(app_id: str, query_input:QueryInput) -> dict:
         Returns:
             dict: Result returned by the agent.
         """
-    in_params= {"app_id": app_id, "session_id": query_input.session_id, "query": query_input.query, "username": query_input.username}
+    in_params= {"app_name": app_id, "session_id": query_input.session_id, "query": query_input.query}
     try:
-        print("triyng to pront setting \n")
         settings= fetch_settings(app_id)
-        print(settings)
         if settings is None:
             raise HTTPException(status_code=404, detail="Settings not found")
         result= execute_agent(in_params, settings)
-        return {"result": result}
+        # return {"result": result}
+        return StreamingResponse(execute_agent(in_params, settings),
+                                 media_type="text/event-stream")
     except Exception as e:
         print("Loged here")
         raise HTTPException(status_code=500, detail=str(e))
