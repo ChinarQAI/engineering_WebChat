@@ -107,3 +107,42 @@ async def execute_agent(in_params: dict, settings: dict):
         result = "Internal Error, If the issue persists please call admin"
         yield result
 
+
+def execute_agent_0(in_params: dict, settings: dict):
+    """
+    Executes the agent using the provided input parameters and settings.
+
+    Args:
+        in_params (dict): Input parameters for the agent execution.
+        settings (dict): Settings required for agent initialization and execution.
+
+    Returns:
+        str: Result of the agent execution.
+    """
+    print("Entered execute agent")
+    session_id = in_params["session_id"]
+    print(f"SESSION ID: {session_id}")
+
+    # Initialize Agent manager with settings
+    agent_manager= AgentManager(settings=settings)
+    try:
+        # initialize and configure the agent
+        agent= agent_manager.initialize_agent()
+        print("AGENT INITIALIZED")
+
+        # invoke the agent with input params
+        result= agent.invoke({
+            "input": in_params["query"]
+        }, {
+            "configurable":{
+                "session_id": session_id
+            }
+        })
+        print("INVOKED AGENT")
+        result = result["output"]
+    except Exception as e:
+        print(f"Error during agent execution: {e}")
+        # Return an error message in case of exception
+        result = "Internal Error, If the issue persists please call admin"
+    
+    return result
