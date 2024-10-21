@@ -26,7 +26,7 @@ class SearchTool:
         """
         self.settings = settings
         self.search_api = GoogleSerperAPIWrapper(serper_api_key=SERPER_API_KEY)
-    
+
     def perform_search(self, query: str):
         """
         Performs a search using the configured search API.
@@ -37,8 +37,12 @@ class SearchTool:
         Returns:
             tuple: A tuple containing the search response and a list of extracted URLs.
         """
-        website_url = self.settings.get("website_url", "")
-        modified_query = f"{website_url} {query}"
+        print(self.settings['Tools']['wb_tool']['website_url'], type(self.settings))
+        # Accessing the website_url
+        website_url = self.settings['Tools']['wb_tool']['website_url']
+        print("++++++WEBSITE URL+++++++++")
+        print(website_url)
+        modified_query = f"site:{website_url} {query}"
         response = self.search_api.run(query=modified_query)
         results = self.search_api.results(modified_query)
         return response, self._extract_urls(results)
