@@ -37,8 +37,12 @@ class SearchTool:
         Returns:
             tuple: A tuple containing the search response and a list of extracted URLs.
         """
-        website_url = self.settings.get("website_url", "")
-        modified_query = f"{website_url} {query}"
+        print(self.settings['Tools']['wb_tool']['website_url'], type(self.settings))
+        # Accessing the website_url
+        website_url = self.settings['Tools']['wb_tool']['website_url']
+        print("++++++WEBSITE URL+++++++++")
+        print(website_url)
+        modified_query = f"site:{website_url} {query}"
         response = self.search_api.run(query=modified_query)
         results = self.search_api.results(modified_query)
         return response, self._extract_urls(results)
@@ -96,6 +100,8 @@ class WebSearchTool:
         """
 
         search_response, sources= self.search_tool.perform_search(query)
+        print("+++++++++++++++++++++++++++Search Response++++++++++++++++++++++++")
+        print(search_response)
         search_response= self.search_tool.clean_text(search_response)
         print(f'CHAIN PROMPT ID{self.settings["Tools"]["wb_tool"]["prompt_id"]}')
         chain= self.chain_manager.create_chain(prompt_id=self.settings["Tools"]["wb_tool"]["prompt_id"])
