@@ -64,7 +64,51 @@ class AgentManager:
 
         return agent_with_history
 
-def execute_agent(in_params: dict, settings: dict):
+async def execute_agent(in_params: dict, settings: dict):
+    """
+    Executes the agent using the provided input parameters and settings.
+
+    Args:
+        in_params (dict): Input parameters for the agent execution.
+        settings (dict): Settings required for agent initialization and execution.
+
+    Yields:
+        str: Incremental results of the agent execution.
+    """
+    session_id = in_params["session_id"]
+
+    # Initialize Agent manager with settings
+    agent_manager = AgentManager(settings=settings)
+    try:
+        # Initialize and configure the agent
+        agent = agent_manager.initialize_agent()
+        
+        async def agent_stream_async():
+            # Use the agent's async stream method if it exists
+            async for chunk in agent.astream(
+                {
+                    "input": in_params["query"]
+                },
+                {
+                    "configurable": {
+                        "session_id": session_id
+                    }
+                }
+            ):
+                yield chunk
+
+        async for chunk in agent_stream_async():
+            content = chunk.get('output', {})
+            if content:
+                # Log the chunk being sent
+                yield f"{content}\n\n"
+    except Exception as e:
+        # Return an error message in case of exception
+        result = "Internal Error, If the issue persists please call admin"
+        yield result
+
+
+def execute_agent_0(in_params: dict, settings: dict):
     """
     Executes the agent using the provided input parameters and settings.
 
@@ -102,4 +146,3 @@ def execute_agent(in_params: dict, settings: dict):
         result = "Internal Error, If the issue persists please call admin"
     
     return result
-
