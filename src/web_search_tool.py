@@ -100,6 +100,8 @@ class WebSearchTool:
         """
 
         search_response, sources= self.search_tool.perform_search(query)
+        print("+++++++++++++++++++++++++++Search Response++++++++++++++++++++++++")
+        print(search_response)
         search_response= self.search_tool.clean_text(search_response)
         print(f'CHAIN PROMPT ID{self.settings["Tools"]["wb_tool"]["prompt_id"]}')
         chain= self.chain_manager.create_chain(prompt_id=self.settings["Tools"]["wb_tool"]["prompt_id"])
