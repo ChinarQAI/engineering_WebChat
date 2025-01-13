@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 
 # # Clear the environment variables
-# os.environ.clear()
+os.environ.clear()
 
 # Load environment variables from the .env file
 load_dotenv()
