@@ -32,4 +32,4 @@ def search_tool_cqai(question: str):
 
 
 
-tools_list_cqai_chat = [search_tool_cqai]
+tools_list_search_tool_cqai = [search_tool_cqai]
