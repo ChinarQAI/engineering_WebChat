@@ -29,4 +29,3 @@ def fetch_settings(app_id: str) -> dict:
         return json.loads(settings)
     return {}
 
-
