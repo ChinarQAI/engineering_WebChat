@@ -1,9 +1,6 @@
 import sys
-
 import uvicorn
-from fastapi import FastAPI, HTTPException
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
-from fastapi.responses import StreamingResponse
 
 # Adding paths to import custom modules
 sys.path.insert(1, "src")
