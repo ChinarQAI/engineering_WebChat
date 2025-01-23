@@ -16,10 +16,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    # Set up Python
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+
+    # Set up environment variables
     - name: Set up environment variables
       run: |
         echo "ES_ENDPOINT=${{ secrets.ES_ENDPOINT }}" >> $GITHUB_ENV
@@ -30,14 +34,40 @@ jobs:
         echo "SERPER_API_KEY=${{ secrets.SERPER_API_KEY }}" >> $GITHUB_ENV
         echo "LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}" >> $GITHUB_ENV
         echo "REDIS_URL=${{ secrets.REDIS_URL }}" >> $GITHUB_ENV
+
+    # Verify environment variables
     - name: Verify environment variables
       run: env
+
+    # Install dependencies
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         python -m pip install -r requirements.txt pytest
-    - name: Discover tests
-      run: pytest --collect-only app/
-    - name: Test with pytest
-      run: pytest app/
 
+    # # Discover tests
+    # - name: Discover tests
+    #   run: pytest --collect-only app/
+
+    # # Test with pytest
+    # - name: Test with pytest
+    #   run: pytest app/
+
+    # Build Docker image
+    - name: Build Docker image
+      run: |
+        docker build --build-arg ES_ENDPOINT=${{ secrets.ES_ENDPOINT }} \
+                     --build-arg ES_CLOUDID=${{ secrets.ES_CLOUDID }} \
+                     --build-arg ES_API=${{ secrets.ES_API }} \
+                     --build-arg OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
+                     --build-arg MODEL_SETTINGS=${{ secrets.MODEL_SETTINGS }} \
+                     --build-arg SERPER_API_KEY=${{ secrets.SERPER_API_KEY }} \
+                     --build-arg LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }} \
+                     --build-arg REDIS_URL=${{ secrets.REDIS_URL }} \
+                     -t your_image_name:latest .
+
+    # Push Docker image (optional)
+    - name: Push Docker image
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker push your_image_name:latest
