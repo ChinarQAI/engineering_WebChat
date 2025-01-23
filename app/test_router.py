@@ -8,7 +8,7 @@ sys.path.insert(1, "src")
 sys.path.insert(2, "app")
 sys.path.insert(3, "config")
 
-from router import app  
+from app.router import app  
 
 
 # Create a test client for the FastAPI app
