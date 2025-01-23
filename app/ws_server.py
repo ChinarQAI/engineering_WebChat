@@ -1,4 +1,4 @@
-from fastapi import HTTPException, WebSocket
+from fastapi import WebSocket
 from typing import List
 from fastapi.websockets import WebSocketState
 
