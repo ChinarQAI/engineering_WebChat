@@ -56,7 +56,8 @@ jobs:
     # Build Docker image
     - name: Build Docker image
       run: |
-        docker buildx build --build-arg ES_ENDPOINT=${{ secrets.ES_ENDPOINT }} \
+        docker buildx build \
+                     --build-arg ES_ENDPOINT=${{ secrets.ES_ENDPOINT }} \
                      --build-arg ES_CLOUDID=${{ secrets.ES_CLOUDID }} \
                      --build-arg ES_API=${{ secrets.ES_API }} \
                      --build-arg OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
@@ -64,7 +65,7 @@ jobs:
                      --build-arg SERPER_API_KEY=${{ secrets.SERPER_API_KEY }} \
                      --build-arg LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }} \
                      --build-arg REDIS_URL=${{ secrets.REDIS_URL }} \
-                     -t your_image_name:latest .
+                     -t engineering:latest .
 
     # Push Docker image (optional)
     - name: Push Docker image
