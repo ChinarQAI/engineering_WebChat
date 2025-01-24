@@ -10,7 +10,6 @@ sys.path.insert(3, "config")
 
 from app.router import app  
 
-
 # Create a test client for the FastAPI app
 client = TestClient(app)
 
