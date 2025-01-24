@@ -1,74 +1,38 @@
-name: Python package
+name: Publish Docker Image
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: ['main']  # Updated to 'main' as it's a common default branch name. Change if needed.
 
 jobs:
-  build:
+  push_to_registry:
+    name: Build and Push Docker Image to Docker Hub
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.9", "3.10", "3.11"]
 
     steps:
-    - uses: actions/checkout@v4
-
-    # Set up Python
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-
-    # Set up environment variables
-    - name: Set up environment variables
-      run: |
-        echo "ES_ENDPOINT=${{ secrets.ES_ENDPOINT }}" >> $GITHUB_ENV
-        echo "ES_CLOUDID=${{ secrets.ES_CLOUDID }}" >> $GITHUB_ENV
-        echo "ES_API=${{ secrets.ES_API }}" >> $GITHUB_ENV
-        echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
-        echo "MODEL_SETTINGS=${{ secrets.MODEL_SETTINGS }}" >> $GITHUB_ENV
-        echo "SERPER_API_KEY=${{ secrets.SERPER_API_KEY }}" >> $GITHUB_ENV
-        echo "LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}" >> $GITHUB_ENV
-        echo "REDIS_URL=${{ secrets.REDIS_URL }}" >> $GITHUB_ENV
-
-    # Verify environment variables
-    - name: Verify environment variables
-      run: env
-
-    # Install dependencies
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install -r requirements.txt pytest
-
-    # # Discover tests
-    # - name: Discover tests
-    #   run: pytest --collect-only app/
-
-    # # Test with pytest
-    # - name: Test with pytest
-    #   run: pytest app/
-
-    # Build Docker image
-    - name: Build Docker image
-      run: |
-        docker buildx build \
-                     --build-arg ES_ENDPOINT=${{ secrets.ES_ENDPOINT }} \
-                     --build-arg ES_CLOUDID=${{ secrets.ES_CLOUDID }} \
-                     --build-arg ES_API=${{ secrets.ES_API }} \
-                     --build-arg OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
-                     --build-arg MODEL_SETTINGS=${{ secrets.MODEL_SETTINGS }} \
-                     --build-arg SERPER_API_KEY=${{ secrets.SERPER_API_KEY }} \
-                     --build-arg LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }} \
-                     --build-arg REDIS_URL=${{ secrets.REDIS_URL }} \
-                     -t engineering:latest .
-
-    # Push Docker image (optional)
-    - name: Push Docker image
-      run: |
-        docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
-        docker push your_image_name:latest
+      # Step 1: Check out the repository
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      
+      # Step 2: Log in to Docker Hub using token
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}  # Set your username in repository secrets
+          password: ${{ secrets.DOCKER_TOKEN }}     # Use Docker token instead of password
+      
+      # Step 3: Extract metadata for tagging and labeling the image
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: owaisibnmushtaq/testapp  # Update the image name with your Docker Hub repo name
+      
+      # Step 4: Build and push Docker image
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .  # Directory containing the Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
