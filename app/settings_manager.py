@@ -1,18 +1,12 @@
 import json
 import os
-
 import redis
 from dotenv import load_dotenv
 
-
-
-
-# # Clear the environment variables
-os.environ.clear()
-
+# Clear the environment variables
+# os.environ.clear()
 # Load environment variables from the .env file
 load_dotenv()
-
 redis_client = redis.Redis.from_url(os.environ.get("REDIS_URL"), decode_responses=True)
 
 def insert_settings(app_id: str, new_settings: dict):
