@@ -1,4 +1,4 @@
-name: Python package
+name: Code test with Flake8 and Pytest
 
 on:
   push:
